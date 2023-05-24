@@ -2,6 +2,8 @@ from selene import browser, have, command
 from demoqa_tests import resource
 import allure
 
+from utils import attach
+
 
 class RegistrationPage:
     def __init__(self):
@@ -9,7 +11,7 @@ class RegistrationPage:
 
     @allure.step('Open demoqa Practice Form')
     def open(self):
-        browser.open('/automation-practice-form')
+        browser.open('https://demoqa.com/automation-practice-form')
 
     @allure.step('Remove banners')
     def remove_banners(self):
@@ -108,3 +110,8 @@ class RegistrationPage:
                 state_city,
             )
         )
+
+    def attach_files(self):
+        attach.add_html(browser)
+        attach.add_screenshot(browser)
+        attach.add_logs(browser)

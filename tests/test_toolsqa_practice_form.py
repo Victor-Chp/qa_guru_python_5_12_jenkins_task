@@ -1,4 +1,5 @@
 from demoqa_tests.pages.registration_page import RegistrationPage
+from utils import attach
 
 
 def test_form_filling_submitting():
@@ -37,5 +38,8 @@ def test_form_filling_submitting():
         'проспект Революции 285 - 45',
         'Uttar Pradesh Agra',
     )
+
+    registration_page.attach_files()
+
 
     ...
