@@ -1,7 +1,6 @@
 from selene import browser, have, command
 from demoqa_tests import resource
 import allure
-
 from utils import attach
 
 

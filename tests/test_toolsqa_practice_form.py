@@ -39,7 +39,5 @@ def test_form_filling_submitting():
         'Uttar Pradesh Agra',
     )
 
-    registration_page.attach_files()
-
 
     ...
