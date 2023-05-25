@@ -1,9 +1,9 @@
 from demoqa_tests.pages.registration_page import RegistrationPage
-from utils import attach
 
 
-def test_form_filling_submitting():
-    registration_page = RegistrationPage()
+def test_form_filling_submitting(setup_browser):
+    br = setup_browser
+    registration_page = RegistrationPage(br)
     registration_page.open()
     registration_page.remove_banners()
 

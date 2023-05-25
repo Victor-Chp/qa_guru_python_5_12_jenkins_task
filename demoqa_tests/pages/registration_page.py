@@ -1,48 +1,49 @@
-from selene import browser, have, command
+from selene import have, command
 from demoqa_tests import resource
 import allure
-from utils import attach
 
 
 class RegistrationPage:
-    def __init__(self):
+
+    def __init__(self, browser):
+        self.browser = browser
         self.state = browser.element('#state')
 
     @allure.step('Open demoqa Practice Form')
     def open(self):
-        browser.open('https://demoqa.com/automation-practice-form')
+        self.browser.open('https://demoqa.com/automation-practice-form')
 
     @allure.step('Remove banners')
     def remove_banners(self):
-        browser.driver.execute_script("$('footer').remove()")
-        browser.driver.execute_script("$('#fixedban').remove()")
+        self.browser.driver.execute_script("$('footer').remove()")
+        self.browser.driver.execute_script("$('#fixedban').remove()")
 
     @allure.step('Fill First name {value}')
     def fill_first_name(self, value):
-        browser.element('#firstName').set(value)
+        self.browser.element('#firstName').set(value)
 
     @allure.step('Fill Last name {value}')
     def fill_last_name(self, value):
-        browser.element('#lastName').set(value)
+        self.browser.element('#lastName').set(value)
 
     @allure.step('Fill email {value}')
     def fill_email(self, value):
-        browser.element('#userEmail').set(value)
+        self.browser.element('#userEmail').set(value)
 
     @allure.step('Select gender {value}')
     def select_gender(self, value):
-        browser.element(f'[name=gender][value={value}]+label').click()
+        self.browser.element(f'[name=gender][value={value}]+label').click()
 
     @allure.step('Fill phone number {value}')
     def fill_phone_number(self, value):
-        browser.element('#userNumber').set(value)
+        self.browser.element('#userNumber').set(value)
 
     @allure.step('Fill date of birth {year} {month} {day}')
     def fill_date_of_birth(self, year, month, day):
-        browser.element('#dateOfBirthInput').click()
-        browser.element('.react-datepicker__year-select').send_keys(year)
-        browser.element('.react-datepicker__month-select').send_keys(month)
-        browser.element(f'.react-datepicker__day--0{day}').click()
+        self.browser.element('#dateOfBirthInput').click()
+        self.browser.element('.react-datepicker__year-select').send_keys(year)
+        self.browser.element('.react-datepicker__month-select').send_keys(month)
+        self.browser.element(f'.react-datepicker__day--0{day}').click()
 
     @allure.step('Fill subject {value}')
     def fill_subject(self, value):
@@ -50,36 +51,36 @@ class RegistrationPage:
 
     @allure.step('Choose hobbie {value}')
     def choose_hobbie(self, value):
-        browser.all('#hobbiesWrapper .custom-checkbox').element_by(
+        self.browser.all('#hobbiesWrapper .custom-checkbox').element_by(
             have.exact_text(value)
         ).click()
 
     @allure.step('Select a picture to upload {name}')
     def upload_picture(self, name):
-        browser.element('#uploadPicture').send_keys(resource.path(name))
+        self.browser.element('#uploadPicture').send_keys(resource.path(name))
 
     @allure.step('Fill current address {value}')
     def fill_address(self, value):
-        browser.element('#currentAddress').send_keys(value)
+        self.browser.element('#currentAddress').send_keys(value)
 
     @allure.step('Fill state {name}')
     def fill_state(self, name):
         self.state.perform(command.js.scroll_into_view)
         self.state.click()
-        browser.all('[id^=react-select][id*=option]').element_by(
+        self.browser.all('[id^=react-select][id*=option]').element_by(
             have.exact_text(name)
         ).click()
 
     @allure.step('Fill city {name}')
     def fill_city(self, name):
-        browser.element('#city').click()
-        browser.all('[id^=react-select][id*=option]').element_by(
+        self.browser.element('#city').click()
+        self.browser.all('[id^=react-select][id*=option]').element_by(
             have.exact_text(name)
         ).click()
 
     @allure.step('Click Submit')
     def submit(self):
-        browser.element('#submit').press_enter()
+        self.browser.element('#submit').press_enter()
 
     @allure.step('Registration verification')
     def should_registered_user_with(
@@ -95,7 +96,7 @@ class RegistrationPage:
         address,
         state_city,
     ):
-        browser.all('.table-responsive td:nth-child(2)').should(
+        self.browser.all('.table-responsive td:nth-child(2)').should(
             have.exact_texts(
                 full_name,
                 email,
@@ -110,7 +111,7 @@ class RegistrationPage:
             )
         )
 
-    def attach_files(self):
-        attach.add_html(browser)
-        attach.add_screenshot(browser)
-        attach.add_logs(browser)
+    # def attach_files(self):
+    #     attach.add_html(browser)
+    #     attach.add_screenshot(browser)
+    #     attach.add_logs(browser)
