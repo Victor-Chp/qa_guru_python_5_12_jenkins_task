@@ -47,7 +47,7 @@ class RegistrationPage:
 
     @allure.step('Fill subject {value}')
     def fill_subject(self, value):
-        browser.element('#subjectsInput').send_keys(value).press_enter()
+        self.browser.element('#subjectsInput').send_keys(value).press_enter()
 
     @allure.step('Choose hobbie {value}')
     def choose_hobbie(self, value):
